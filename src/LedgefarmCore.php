@@ -22,8 +22,11 @@ class LedgefarmCore
     // @var string the LedgfarmCore API key to be used for requests
     public static $apiKey;
 
-    // @var path the LedgefarmCore certifcate real path to be used to authenticate service
-    public static $certFile;
+    // @var path the LedgefarmCore certifcate crt file real path to be used to authenticate service
+    public static $certCrtFile;
+
+    // @var path the LedgefarmCore certifcate key file real path to be used to authenticate service
+    public static $certKeyFile;
 
     // @var string the LedgefarmCore passphrase of cert file
     public static $certPassword;
@@ -33,11 +36,12 @@ class LedgefarmCore
      *
      * @param string $apiKey
      * @param string $apiUrl
-     * @param string $certFile
+     * @param string $certCrtFile
+     * @param string $certKeyFile
      * @param string $certPassword
      * @return boolean
      */
-    public static function setGlobalConfigurations($apiKey, $apiUrl, $certFile, $certPassword)
+    public static function setGlobalConfigurations($apiKey, $apiUrl, $certCrtFile, $certKeyFile, $certPassword)
     {
         try
         {
@@ -47,7 +51,8 @@ class LedgefarmCore
             }
             self::$apiKey = $apiKey;
             self::$apiUrl = $apiUrl;
-            self::$certFile = $certFile;
+            self::$certCrtFile = $certCrtFile;
+            self::$certKeyFile = $certKeyFile;
             self::$certPassword = $certPassword;
             return true;
         } catch(Exception $e)
@@ -123,23 +128,10 @@ class LedgefarmCore
         }
         else
         {
-            if($response['response']['error'])
-            {
-                throw new Exception(
-                    $response['response']['error']['message'],
-                    $response['response']['error']['statusCode']
-                );
-            }
-            else
-            {
-                $message = $response['response']['results']['errors'][0]['path'][0]
-                            ." : "
-                            .$response['response']['results']['errors'][0]['message'];
-                throw new Exception(
-                    $message,
-                    400
-                );
-            }
+            throw new Exception(
+                $response['response']['error']['message'],
+                $response['response']['error']['code']
+            );
         }
     }
 

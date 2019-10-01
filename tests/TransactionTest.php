@@ -10,7 +10,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase {
     public function testGetAll() {
         try
         {
-            $wallet = new Transaction(BaseLedgefarmCore::TOKEN);
+            $wallet = new Transaction(BaseLedgefarmCore::ACCESSKEY);
             $resp = $wallet->getAll(10, 1);
             self::$transactionId = $resp[0]['transactionId'];
             $this->assertTrue(true);
@@ -24,7 +24,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase {
     public function testGet() {
         try
         {
-            $wallet = new Transaction(BaseLedgefarmCore::TOKEN);
+            $wallet = new Transaction(BaseLedgefarmCore::ACCESSKEY);
             $wallet->get(self::$transactionId);
             $this->assertTrue(true);
         }

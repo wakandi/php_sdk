@@ -6,14 +6,15 @@ use Ledgefarm\LedgefarmCore\LedgefarmCore;
 
 class BaseLedgefarmCore
 {
-    const TOKEN = '<admin access key>';
+    const ACCESSKEY = '<admin access key>';
     public static $walletName;
 
     public static function setGlobalConfigurations() {
         LedgefarmCore::setGlobalConfigurations(
             '<api key>',
             '<operator api endpoint>',
-            '<p12 certificate file path>',
+            '<crt file path>',
+            '<key file path>',
             '<certificate passphrase>'
         );
     }

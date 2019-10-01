@@ -8,7 +8,7 @@ class WalletTest extends PHPUnit_Framework_TestCase {
     public function testCreate() {
         try
         {
-            $wallet = new Wallet(BaseLedgefarmCore::TOKEN);
+            $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
             BaseLedgefarmCore::$walletName = uniqid();
             $resp = $wallet->create(BaseLedgefarmCore::$walletName);
             BaseLedgefarmCore::$walletName = $resp['wallet'];
@@ -23,7 +23,7 @@ class WalletTest extends PHPUnit_Framework_TestCase {
     public function testGetAll() {
         try
         {
-            $wallet = new Wallet(BaseLedgefarmCore::TOKEN);
+            $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
             $wallet->getAll(10, 1);
             $this->assertTrue(true);
         }
@@ -36,13 +36,12 @@ class WalletTest extends PHPUnit_Framework_TestCase {
     public function testBlock() {
         try
         {
-            $wallet = new Wallet(BaseLedgefarmCore::TOKEN);
+            $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
             $wallet->block(BaseLedgefarmCore::$walletName);
             $this->assertTrue(true);
         }
         catch(Exception $e)
         {
-            echo $e->getMessage();die;
             $this->assertTrue(false);
         }
     }
@@ -50,7 +49,7 @@ class WalletTest extends PHPUnit_Framework_TestCase {
     public function testUnblock() {
         try
         {
-            $wallet = new Wallet(BaseLedgefarmCore::TOKEN);
+            $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
             $wallet->unblock(BaseLedgefarmCore::$walletName);
             $this->assertTrue(true);
         }
@@ -63,7 +62,7 @@ class WalletTest extends PHPUnit_Framework_TestCase {
     public function testGet() {
         try
         {
-            $wallet = new Wallet(BaseLedgefarmCore::TOKEN);
+            $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
             $wallet->get(BaseLedgefarmCore::$walletName);
             $this->assertTrue(true);
         }

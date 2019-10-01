@@ -30,19 +30,17 @@ class Curl
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-        curl_setopt($ch, CURLOPT_SSLCERT, LedgefarmCore::$certFile);
-        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'P12');
+        curl_setopt($ch, CURLOPT_SSLCERT, LedgefarmCore::$certCrtFile);
+        curl_setopt($ch, CURLOPT_SSLKEY, LedgefarmCore::$certKeyFile);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSLCERTPASSWD, LedgefarmCore::$certPassword);
+        curl_setopt($ch, CURLOPT_SSLKEYPASSWD, LedgefarmCore::$certPassword);
         curl_setopt($ch, CURLOPT_TIMEOUT, self::TIMEOUT);
         $resp = curl_exec($ch);
-        $err = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        if($err){
-            return self::setResponse($err, 2);
-        }
-        return self::setResponse($resp, 1);
+        return self::setResponse($resp, $httpCode);
     }
 
     /**
@@ -61,20 +59,17 @@ class Curl
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($body));
-        curl_setopt($ch, CURLOPT_SSLCERT, LedgefarmCore::$certFile);
-        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'P12');
+        curl_setopt($ch, CURLOPT_SSLCERT, LedgefarmCore::$certCrtFile);
+        curl_setopt($ch, CURLOPT_SSLKEY, LedgefarmCore::$certKeyFile);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSLCERTPASSWD, LedgefarmCore::$certPassword);
+        curl_setopt($ch, CURLOPT_SSLKEYPASSWD, LedgefarmCore::$certPassword);
         curl_setopt($ch, CURLOPT_TIMEOUT, self::TIMEOUT);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $resp = curl_exec($ch);
-        $err = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        if($err){
-            return self::setResponse($err, 2);
-        }
-        return self::setResponse($resp, 1);
+        return self::setResponse($resp, $httpCode);
     }
 
     /**
@@ -93,20 +88,17 @@ class Curl
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($query));
-        curl_setopt($ch, CURLOPT_SSLCERT, LedgefarmCore::$certFile);
-        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'P12');
+        curl_setopt($ch, CURLOPT_SSLCERT, LedgefarmCore::$certCrtFile);
+        curl_setopt($ch, CURLOPT_SSLKEY, LedgefarmCore::$certKeyFile);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSLCERTPASSWD, LedgefarmCore::$certPassword);
+        curl_setopt($ch, CURLOPT_SSLKEYPASSWD, LedgefarmCore::$certPassword);
         curl_setopt($ch, CURLOPT_TIMEOUT, self::TIMEOUT);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $resp = curl_exec($ch);
-        $err = curl_error($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        if($err){
-            return self::setResponse($err, 2);
-        }
-        return self::setResponse($resp, 1);
+        return self::setResponse($resp, $httpCode);
     }
 
     /**
@@ -134,22 +126,51 @@ class Curl
      * Function setResponse
      * @return array
      */
-    function setResponse($response, $type)
+    function setResponse($response, $httpCode)
     {
-        if($type === 1)
-        {
-            $finalResponse = array(
-                "response" => json_decode((string)$response, true)
-            );
-        }
-        else
-        {
+        $json = json_decode($response, true);
+        $jsonErr = json_last_error();
+        if ($jsonErr === 0) {
+            if(isset($json['success'])) {
+                if($json['success']){
+                    $finalResponse = array(
+                        "response" => $json
+                    );
+                } else {
+                    $finalResponse = array(
+                        "response" => array(
+                            "success" => false,
+                            "error" => array(
+                                "message" => $json['error']['message'],
+                                "code" => $httpCode
+                            )
+                        )
+                    );
+                }
+            } else {
+                if(isset($json['results'])){
+                    $message = $json['results']['errors'][0]['path'][0]." : ".$json['results']['errors'][0]['message'];
+                } else {
+                    $message = $json['message'];
+                }
+                $finalResponse = array(
+                    "response" => array(
+                        "success" => false,
+                        "error" => array(
+                            "message" => $message,
+                            "code" => $httpCode
+                        )
+                    )
+                );
+            }
+        } else {
+            $message = $response?$response: 'SERVER_ERROR';
             $finalResponse = array(
                 "response" => array(
                     "success" => false,
                     "error" => array(
-                        "message" => $response,
-                        "statusCode" => 401
+                        "message" => $message,
+                        "code" => $httpCode
                     )
                 )
             );

@@ -9,8 +9,8 @@ class TokenTest extends PHPUnit_Framework_TestCase {
     public $feeObj;
     const Token = '<token name>';
     const WALLETNAME = '<another wallet name>';
-    const TOKEN = '<wallet access key>';
-    const FROMTOKEN = '<another wallet access key>';
+    const ACCESSKEY = '<wallet access key>';
+    const FROMACCESSKEY = '<another wallet access key>';
     public static $tokenRequestId = '';
 
     public function __construct()
@@ -23,7 +23,7 @@ class TokenTest extends PHPUnit_Framework_TestCase {
     {
         try
         {
-            $token = new Token(BaseLedgefarmCore::TOKEN);
+            $token = new Token(BaseLedgefarmCore::ACCESSKEY);
             $feeArray = array($this->feeObj);
             $token->issue(self::WALLETNAME, self::Token, '<amount>', $feeArray);
             $this->assertTrue(true);
@@ -38,7 +38,7 @@ class TokenTest extends PHPUnit_Framework_TestCase {
     {
         try
         {
-            $token = new Token(self::TOKEN);
+            $token = new Token(self::ACCESSKEY);
             $feeArray = array($this->feeObj);
             $token->transfer(self::WALLETNAME, self::Token, '<amount>', $feeArray);
             $this->assertTrue(true);
@@ -53,7 +53,7 @@ class TokenTest extends PHPUnit_Framework_TestCase {
     {
         try
         {
-            $token = new Token(BaseLedgefarmCore::TOKEN);
+            $token = new Token(BaseLedgefarmCore::ACCESSKEY);
             $feeArray = array($this->feeObj);
             $token->withdraw(self::WALLETNAME, self::Token, '<amount>', $feeArray);
             $this->assertTrue(true);
@@ -68,7 +68,7 @@ class TokenTest extends PHPUnit_Framework_TestCase {
     {
         try
         {
-            $token = new Token(self::TOKEN);
+            $token = new Token(self::ACCESSKEY);
             $resp = $token->request(self::WALLETNAME, self::Token, '<amount>');
             self::$tokenRequestId = $resp['tokenRequestId'];
             $this->assertTrue(true);
@@ -83,7 +83,7 @@ class TokenTest extends PHPUnit_Framework_TestCase {
     {
         try
         {
-            $token = new Token(self::FROMTOKEN);
+            $token = new Token(self::FROMACCESSKEY);
             $feeArray = array($this->feeObj);
             $token->accept(self::$tokenRequestId, $feeArray);
             $this->assertTrue(true);
@@ -99,7 +99,7 @@ class TokenTest extends PHPUnit_Framework_TestCase {
         try
         {
             $this->testRequest();
-            $token = new Token(self::FROMTOKEN);
+            $token = new Token(self::FROMACCESSKEY);
             $feeArray = array($this->feeObj);
             $token->reject(self::$tokenRequestId);
             $this->assertTrue(true);

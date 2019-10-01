@@ -35,18 +35,21 @@ use Ledgefarm\LedgefarmCore\LedgefarmCore;
          LedgefarmCore::setGlobalConfigurations(
             'lf_core_test_6847437634763763476343763376237632276',
             'https://LedgefarmCore.com/api/v2/wallet',
-            'op1.p12',
+            'op1.crt',
+            'op1.key',
             'abcd1234'
         );
  }
 ```
 The settings are used to make the application interact with Ledgefarm core.
 
--   LedgefarmApiUrl: It is the hosted URL of the Ledgefarm Core API. This URL should end with a version of the application i.e.  http://host:port/api/[version]/. As of now, the current version is v1.
-
 -   ApiKey: This is the unique key for each operator that is validating the identity of the operator on each request.
 
--  CertPath: This is the path for the certificate file. This file is provided at the time when Ledgefarm Core is setup. Ledgefarm API is protected by client certificate authentication. Each operator will get a certificate to interact with Ledgefarm API. This certificate must be provided to interact with Ledgefarm API.
+-   LedgefarmApiUrl: It is the hosted URL of the Ledgefarm Core API. This URL should end with a version of the application i.e.  http://host:port/api/[version]/. As of now, the current version is v1.
+
+-  CertCrtPath: This is the path for the certificate crt file. This file is provided at the time when Ledgefarm Core is setup. Ledgefarm API is protected by client certificate authentication. Each operator will get a certificate to interact with Ledgefarm API. This certificate must be provided to interact with Ledgefarm API.
+
+-  CertKeyPath: This is the path for the certificate key file. This file is provided at the time when Ledgefarm Core is setup. Ledgefarm API is protected by client certificate authentication. Each operator will get a certificate to interact with Ledgefarm API. This certificate must be provided to interact with Ledgefarm API.
 
 - CertPassphrase: This is the key to use the certificate file. Client certificate is protected by a passphrase. The passphrase of certificate must be provided to interact with Ledgefarm API.
   
@@ -76,23 +79,26 @@ use SebastianBergmann\Exporter\Exception;
 
 public $feeObj;
 
-public function __construct()
-{
-        $this->feeObj = new Fee('q1w2e37ur4t6', '0.1', 'operator fee');
-}
+class Operator {
+    
+    public function __construct()
+    {
+            $this->feeObj = new Fee('q1w2e37ur4t6', '0.1', 'operator fee');
+    }
 
-public function create()
-{
-        try
-        {
-            $wallet = new Wallet('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dc');
-            $resp = $wallet->create('q1w2e37ur4t5');
-            print_r($resp);
-        }
-        catch(Exception $e)
-        {
-               echo $e->getMessage(); 
-        }
+    public function create()
+    {
+            try
+            {
+                $wallet = new Wallet('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dc');
+                $resp = $wallet->create('q1w2e37ur4t5');
+                print_r($resp);
+            }
+            catch(Exception $e)
+            {
+                echo $e->getMessage(); 
+            }
+    }
 }
 ```
 -   Get: This function is used to obtain the information of a particular wallet by using there walletname. Admin access Key need to be used here for getting the wallet of a user.
