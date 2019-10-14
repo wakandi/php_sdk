@@ -9,7 +9,7 @@ Create a file named composer.json or if you are going to use this package in exi
 {
         "require": {
                 "ledgefarm/ledgefarmcore": "2.0.0",
-                "guzzlehttp/guzzle": "6.0"
+                "guzzlehttp/guzzle": "~6.0"
         },
         "require-dev": {
             "phpunit/phpunit": "4.0.*"
