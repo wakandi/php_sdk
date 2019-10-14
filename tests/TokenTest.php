@@ -15,7 +15,6 @@ class TokenTest extends PHPUnit_Framework_TestCase {
 
     public function __construct()
     {
-        BaseLedgefarmCore::setGlobalConfigurations();
         $this->feeObj = new Fee('<fee wallet name>', '<fee amount>', '<fee memo>');
     }
 
@@ -102,6 +101,20 @@ class TokenTest extends PHPUnit_Framework_TestCase {
             $token = new Token(self::FROMACCESSKEY);
             $feeArray = array($this->feeObj);
             $token->reject(self::$tokenRequestId);
+            $this->assertTrue(true);
+        }
+        catch(Exception $e)
+        {
+            $this->assertTrue(false);
+        }
+    }
+
+    public function testGet()
+    {
+        try
+        {
+            $token = new Token(BaseLedgefarmCore::ACCESSKEY);
+            $token->get(self::Token);
             $this->assertTrue(true);
         }
         catch(Exception $e)

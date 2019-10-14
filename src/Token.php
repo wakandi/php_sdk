@@ -141,6 +141,18 @@ class Token
         );
         return LedgefarmCore::post($params,"/token/request/reject");
     }
+
+    /**
+     * get method to get total supply of given token
+     * @param string $token
+     */
+    function get($token)
+    {
+        return LedgefarmCore::get(
+            array(),
+            "/token/$token"
+        );
+    }
 }
 
 ?>

@@ -24,7 +24,7 @@ class WalletTest extends PHPUnit_Framework_TestCase {
         try
         {
             $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
-            $wallet->getAll(10, 1);
+            $wallet->getAll('<limit>', '<offset>');
             $this->assertTrue(true);
         }
         catch(Exception $e)

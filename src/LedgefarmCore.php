@@ -66,12 +66,20 @@ class LedgefarmCore
      * Function setHeaders to set apikey and token to each request
      * @return array
      */
-    public static function setHeaders()
+    public static function setHeaders($extraHeader = array())
     {
-        return $header = array(
+        $headers = array(
             "apiKey" => self::$apiKey,
             "accessKey" => self::$token
         );
+        if(!empty($extraHeader))
+        {
+            foreach($extraHeader as $key=>$value)
+            {
+                $headers[$key] = $value;
+            }
+        }
+        return $headers;
     }
 
     /**
@@ -79,12 +87,12 @@ class LedgefarmCore
      * @param array $dataArray
      * @param string $requestURL
      */
-    public static function get($dataArray = array(), $requestURL = "")
+    public static function get($dataArray = array(), $requestURL = "", $isBinary = false, $extraHeader = array())
     {
-        $header = self::setHeaders();
-        $curl = new Curl();
+        $header = self::setHeaders($extraHeader);
+        $httpRequest = new HttpRequest();
         $requestURL = self::$apiUrl.$requestURL;
-        $response = $curl->get($requestURL, $header, $dataArray);
+        $response = $httpRequest->get($requestURL, $header, $dataArray, $isBinary);
         return self::setResponse($response);
     }
 
@@ -93,12 +101,13 @@ class LedgefarmCore
      * @param array $dataArray
      * @param string $requestURL
      */
-    public static function post($dataArray = array(), $requestURL = "")
+
+    public static function post($dataArray = array(), $requestURL = "", $extraHeader = array())
     {
-        $header = self::setHeaders();
-        $curl = new Curl();
+        $header = self::setHeaders($extraHeader);
+        $httpRequest = new HttpRequest();
         $requestURL = self::$apiUrl.$requestURL;
-        $response = $curl->post($requestURL, $header, $dataArray);
+        $response = $httpRequest->save($requestURL, $header, $dataArray, 'POST');
         return self::setResponse($response);
     }
 
@@ -107,12 +116,12 @@ class LedgefarmCore
      * @param array $dataArray
      * @param string $requestURL
      */
-    public static function put($dataArray = array(), $requestURL = "")
+    public static function put($dataArray = array(), $requestURL = "", $extraHeader = array())
     {
-        $header = self::setHeaders();
-        $curl = new Curl();
+        $header = self::setHeaders($extraHeader);
+        $httpRequest = new HttpRequest();
         $requestURL = self::$apiUrl.$requestURL;
-        $response = $curl->put($requestURL, $header, $dataArray);
+        $response = $httpRequest->save($requestURL, $header, $dataArray, 'PUT');
         return self::setResponse($response);
     }
 

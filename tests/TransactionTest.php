@@ -11,7 +11,7 @@ class TransactionTest extends PHPUnit_Framework_TestCase {
         try
         {
             $wallet = new Transaction(BaseLedgefarmCore::ACCESSKEY);
-            $resp = $wallet->getAll(10, 1);
+            $resp = $wallet->getAll('<limit>', '<offset');
             self::$transactionId = $resp[0]['transactionId'];
             $this->assertTrue(true);
         }

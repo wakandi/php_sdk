@@ -8,7 +8,8 @@ Create a file named composer.json or if you are going to use this package in exi
 ```json
 {
         "require": {
-                "ledgefarm/ledgefarmcore": "2.0.0"
+                "ledgefarm/ledgefarmcore": "2.0.0",
+                "guzzlehttp/guzzle": "6.0"
         },
         "require-dev": {
             "phpunit/phpunit": "4.0.*"
@@ -166,6 +167,64 @@ public function unblock()
         }
 }
 ```
+
+### Operator Service
+Operator service is used to perform all the operations related Global Network. Which includes get (wallet balance of operator), ownedToken and issuedToken.
+#### Methods:
+-   Get: This function is used to get the wallet balance of Operator on Global Network. Admin access key need to be used here for getting balance of an operator.
+
+```php
+public function get()
+{
+        try
+        {
+            $operator = new Operator('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dc');
+            $resp = $operator->get();
+            print_r($resp);
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage(); 
+        }
+}
+```
+
+-   OwnedToken: This function is used to getting information about how much token need to take from another operator. Admin access key need to be used here for getting token information.
+
+```php
+public function ownedToken()
+{
+        try
+        {
+            $operator = new Operator('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dc');
+            $resp = $operator->ownedToken();
+            print_r($resp);
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage(); 
+        }
+}
+```
+
+-   IssuedToken: This function is used to getting information about how many tokens transferred by the operator to the other operator on global network. Admin access key need to be used here for getting token information.
+
+```php
+public function issuedToken()
+{
+        try
+        {
+            $operator = new Operator('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dc');
+            $resp = $operator->issuedToken();
+            print_r($resp);
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage(); 
+        }
+}
+```
+
 ### Token Service
 Token service is used to perform all the operations related to tokens. Which includes issue, transfer, withdraw and request token etc.
 #### Methods:
@@ -281,6 +340,23 @@ public function reject()
 }
 ```
 
+-   Get: This function is used to to get total supply of the token. Admin’s access Key need to be used here.
+
+```php
+public function get()
+{
+        try
+        {
+            $token = new Token('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dd');
+            $resp = $token->get('USD');
+            print_r($resp);
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage(); 
+        }
+}
+```
 
 ### Transaction Service
 Transaction service is used to get the information of a specific transaction or list of transactions.
