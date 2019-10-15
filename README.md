@@ -8,7 +8,7 @@ Create a file named composer.json or if you are going to use this package in exi
 ```json
 {
         "require": {
-                "ledgefarm/ledgefarmcore": "2.1.0",
+                "ledgefarm/ledgefarmcore": "1.0.8",
                 "guzzlehttp/guzzle": "~6.0"
         },
         "require-dev": {
@@ -61,6 +61,7 @@ Services that are available in this package:
 
 -   Wallet Service
 -   Transaction Service
+-   Operator Service
 -   Token Service
 
 ## Usage
@@ -74,6 +75,7 @@ require 'vendor/autoload.php';
 
 use Ledgefarm\LedgefarmCore\Wallet;
 use Ledgefarm\LedgefarmCore\Fee;
+use Ledgefarm\LedgefarmCore\Operator;
 use Ledgefarm\LedgefarmCore\Token;
 use Ledgefarm\LedgefarmCore\Transaction;
 use SebastianBergmann\Exporter\Exception;
