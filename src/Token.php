@@ -26,19 +26,17 @@ class Token
      * @param string $token
      * @param double $amount
      * @param Fee[] $fee
-     * @param string $transactionNumber
-     * @param string $paymentMode
+     * @param string $transactionId
      */
     function issue($toWallet, 
                     $token, 
                     $amount, 
-                    array $fee, 
-                    $transactionNumber = "",
-                    $paymentMode = "manual"
+                    array $fee,
+                    $transactionId = ""
     )
     {
         $fee = LedgefarmCore::objToArray($fee);
-        if($transactionNumber === "")
+        if($transactionId === "")
         {
             $params = array(
                 "toWallet" => $toWallet,
@@ -54,8 +52,7 @@ class Token
                 "token" => $token,
                 "amount" => $amount,
                 "fee" => $fee,
-                "transactionNumber" => $transactionNumber,
-                "paymentMode" => $paymentMode
+                "transactionId" => $transactionId
             );
         }
         return LedgefarmCore::post($params,"/token/issue");

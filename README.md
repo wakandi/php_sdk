@@ -8,7 +8,7 @@ Create a file named composer.json or if you are going to use this package in exi
 ```json
 {
         "require": {
-                "ledgefarm/ledgefarmcore": "1.0.10",
+                "ledgefarm/ledgefarmcore": "1.0.100",
                 "guzzlehttp/guzzle": "~6.0"
         },
         "require-dev": {
@@ -35,7 +35,7 @@ use Ledgefarm\LedgefarmCore\LedgefarmCore;
  {
          LedgefarmCore::setGlobalConfigurations(
             'lf_core_test_6847437634763763476343763376237632276',
-            'https://LedgefarmCore.com/api/v2',
+            'https://LedgefarmCore.com/api/v2/wallet',
             'op1.crt',
             'op1.key',
             'abcd1234'
@@ -82,7 +82,7 @@ use SebastianBergmann\Exporter\Exception;
 
 public $feeObj;
 
-class Operator {
+class Client {
     
     public function __construct()
     {
