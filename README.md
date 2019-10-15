@@ -8,7 +8,7 @@ Create a file named composer.json or if you are going to use this package in exi
 ```json
 {
         "require": {
-                "ledgefarm/ledgefarmcore": "1.0.8",
+                "ledgefarm/ledgefarmcore": "1.0.10",
                 "guzzlehttp/guzzle": "~6.0"
         },
         "require-dev": {
