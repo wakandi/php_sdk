@@ -35,7 +35,7 @@ use Ledgefarm\LedgefarmCore\LedgefarmCore;
  {
          LedgefarmCore::setGlobalConfigurations(
             'lf_core_test_6847437634763763476343763376237632276',
-            'https://LedgefarmCore.com/api/v2/wallet',
+            'https://LedgefarmCore.com/api/v2',
             'op1.crt',
             'op1.key',
             'abcd1234'
