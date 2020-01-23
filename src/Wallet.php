@@ -146,18 +146,13 @@ class Wallet
     {
         if($countryCode === ""){
             return LedgefarmCore::get(
-                array(
-                    'search' => $search
-                ),
-                "/wallet/search"
+                array(),
+                "/wallet/search?search=".$search
             );
         } else {
             return LedgefarmCore::get(
-                array(
-                    'search' => $search,
-                    'countryCode' => $countryCode,
-                ),
-                "/wallet/search"
+                array(),
+                "/wallet/search?search=".$search."&countryCode=".rawurlencode($countryCode)
             );
         }
     }
