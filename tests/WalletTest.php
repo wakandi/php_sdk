@@ -50,7 +50,7 @@ class WalletTest extends PHPUnit_Framework_TestCase {
         try
         {
             $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
-            $wallet->block(BaseLedgefarmCore::$walletName);
+            $wallet->block(BaseLedgefarmCore::$walletName, '<name>', '<email>', '<countryCode>', '<phone>', '<avatar>', '<isPublic>');
             $this->assertTrue(true);
         }
         catch(Exception $e)
@@ -63,7 +63,7 @@ class WalletTest extends PHPUnit_Framework_TestCase {
         try
         {
             $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
-            $wallet->unblock(BaseLedgefarmCore::$walletName);
+            $wallet->unblock(BaseLedgefarmCore::$walletName, '<name>', '<email>', '<countryCode>', '<phone>', '<avatar>', '<isPublic>');
             $this->assertTrue(true);
         }
         catch(Exception $e)
