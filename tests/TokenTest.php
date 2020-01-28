@@ -2,11 +2,13 @@
 
 use Ledgefarm\LedgefarmCore\Token;
 use Ledgefarm\LedgefarmCore\Fee;
+use Ledgefarm\LedgefarmCore\BatchTransfer;
 use Ledgefarm\LedgefarmCoreTest\BaseLedgefarmCore;
 
 class TokenTest extends PHPUnit_Framework_TestCase {
 
     public $feeObj;
+    public $batchTransferObj;
     const Token = '<token name>';
     const WALLETNAME = '<another wallet name>';
     const ACCESSKEY = '<wallet access key>';
@@ -16,6 +18,7 @@ class TokenTest extends PHPUnit_Framework_TestCase {
     public function __construct()
     {
         $this->feeObj = new Fee('<fee wallet name>', '<fee amount>', '<fee memo>');
+        $this->batchTransferObj = new BatchTransfer('<amount>', '<receiver wallet name>', '<memo>');
     }
 
     public function testIssue()
@@ -40,6 +43,22 @@ class TokenTest extends PHPUnit_Framework_TestCase {
             $token = new Token(self::ACCESSKEY);
             $feeArray = array($this->feeObj);
             $token->transfer(self::WALLETNAME, self::Token, '<amount>', $feeArray);
+            $this->assertTrue(true);
+        }
+        catch(Exception $e)
+        {
+            $this->assertTrue(false);
+        }
+    }
+
+    public function testBatchTransfer()
+    {
+        try
+        {
+            $token = new Token(self::ACCESSKEY);
+            $feeArray = array($this->feeObj);
+            $batchTransferArray = array($this->batchTransferObj);
+            $token->batchTransfer(self::Token, '<amount>', $memo, $feeArray, $batchTransferArray);
             $this->assertTrue(true);
         }
         catch(Exception $e)

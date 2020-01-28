@@ -94,64 +94,6 @@ class Wallet
     }
 
     /**
-     * Block method to block to a user
-     * @param string $walletName
-     *  * OPTIONAL
-     * @param string $name
-     * @param string $email
-     * @param string $countryCode
-     * @param string $phone
-     * @param string $avatar
-     * @param boolean $isPublic
-     * OPTIONAL
-     */
-    function block($walletName, $name = null, $email = null, $countryCode = null, $phone = null, $avatar = null, $isPublic = null)
-    {
-        return LedgefarmCore::put(
-            array(
-                'wallet' => $walletName,
-                'name' => $name,
-                'email' => $email,
-                'countryCode' => $countryCode,
-                'phone' => $phone,
-                'avatar' => $avatar,
-                'isPublic' => $isPublic,
-                'blocked' => true
-            ),
-            "/wallet"
-        );
-    }
-
-    /**
-     * Unblock method to un-block to a user
-     * @param string $walletName
-     *  * OPTIONAL
-     * @param string $name
-     * @param string $email
-     * @param string $countryCode
-     * @param string $phone
-     * @param string $avatar
-     * @param boolean $isPublic
-     * OPTIONAL
-     */
-    function unblock($walletName, $name = null, $email = null, $countryCode = null, $phone = null, $avatar = null, $isPublic = null)
-    {
-        return LedgefarmCore::put(
-            array(
-                'wallet' => $walletName,
-                'name' => $name,
-                'email' => $email,
-                'countryCode' => $countryCode,
-                'phone' => $phone,
-                'avatar' => $avatar,
-                'isPublic' => $isPublic,
-                'blocked' => false
-            ),
-            "/wallet"
-        );
-    }
-
-    /**
      * Get method to get details of a user
      * @param string $walletName
      */

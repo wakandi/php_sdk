@@ -46,32 +46,6 @@ class WalletTest extends PHPUnit_Framework_TestCase {
         }
     }
 
-    public function testBlock() {
-        try
-        {
-            $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
-            $wallet->block(BaseLedgefarmCore::$walletName, '<name>', '<email>', '<countryCode>', '<phone>', '<avatar>', '<isPublic>');
-            $this->assertTrue(true);
-        }
-        catch(Exception $e)
-        {
-            $this->assertTrue(false);
-        }
-    }
-
-    public function testUnblock() {
-        try
-        {
-            $wallet = new Wallet(BaseLedgefarmCore::ACCESSKEY);
-            $wallet->unblock(BaseLedgefarmCore::$walletName, '<name>', '<email>', '<countryCode>', '<phone>', '<avatar>', '<isPublic>');
-            $this->assertTrue(true);
-        }
-        catch(Exception $e)
-        {
-            $this->assertTrue(false);
-        }
-    }
-
     public function testGet() {
         try
         {
