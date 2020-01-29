@@ -79,9 +79,9 @@ class Token
 
     /**
      * Batch transfer method to transfer token to multiple users wallet
-     * @param string $toWallet
      * @param string $token
      * @param double $amount
+     * @param string $memo
      * @param Fee[] $fee
      * @param Batch[] $batch
      */
