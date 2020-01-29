@@ -22,12 +22,56 @@ class Wallet
     /**
      * Create method to create user wallet
      * @param string $walletName
+     * OPTIONAL
+     * @param string $name
+     * @param string $email
+     * @param string $countryCode
+     * @param string $phone
+     * @param string $avatar
+     * @param boolean $isPublic
+     * OPTIONAL
      */
-    function create($walletName = "")
+    function create($walletName = "", $name = null, $email = null, $countryCode = null, $phone = null, $avatar = null, $isPublic = null)
     {
         return LedgefarmCore::post(
             array(
-                "walletName" => $walletName
+                'walletName' => $walletName,
+                'name' => $name,
+                'email' => $email,
+                'countryCode' => $countryCode,
+                'phone' => $phone,
+                'avatar' => $avatar,
+                'isPublic' => $isPublic,
+            ),
+            "/wallet"
+        );
+    }
+
+    /**
+     * Create method to update user wallet
+     * @param string $wallet
+     * OPTIONAL
+     * @param string $name
+     * @param string $email
+     * @param string $countryCode
+     * @param string $phone
+     * @param string $avatar
+     * @param boolean $isPublic
+     * @param boolean $blocked
+     * OPTIONAL
+     */
+    function update($wallet = "", $name = null, $email = null, $countryCode = null, $phone = null, $avatar = null, $isPublic = null, $blocked = null)
+    {
+        return LedgefarmCore::put(
+            array(
+                'wallet' => $wallet,
+                'name' => $name,
+                'email' => $email,
+                'countryCode' => $countryCode,
+                'phone' => $phone,
+                'avatar' => $avatar,
+                'isPublic' => $isPublic,
+                'blocked' => $blocked
             ),
             "/wallet"
         );
@@ -50,36 +94,6 @@ class Wallet
     }
 
     /**
-     * Block method to block to a user
-     * @param string $walletName
-     */
-    function block($walletName)
-    {
-        return LedgefarmCore::put(
-            array(
-                'wallet' => $walletName,
-                'blocked' => true
-            ),
-            "/wallet"
-        );
-    }
-
-    /**
-     * Unblock method to un-block to a user
-     * @param string $walletName
-     */
-    function unblock($walletName)
-    {
-        return LedgefarmCore::put(
-            array(
-                'wallet' => $walletName,
-                'blocked' => false
-            ),
-            "/wallet"
-        );
-    }
-
-    /**
      * Get method to get details of a user
      * @param string $walletName
      */
@@ -89,6 +103,28 @@ class Wallet
             array(),
             "/wallet/$walletName"
         );
+    }
+
+     /**
+     * Search method to search wallets from directory service
+     * @param string $search
+     * OPTIONAL
+     * @param string $countryCode
+     * OPTIONAL
+     */
+    function search($search = "", $countryCode = "")
+    {
+        if($countryCode === ""){
+            return LedgefarmCore::get(
+                array(),
+                "/wallet/search?search=".$search
+            );
+        } else {
+            return LedgefarmCore::get(
+                array(),
+                "/wallet/search?search=".$search."&countryCode=".rawurlencode($countryCode)
+            );
+        }
     }
 }
 

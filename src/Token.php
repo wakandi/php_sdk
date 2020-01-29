@@ -78,6 +78,28 @@ class Token
     }
 
     /**
+     * Batch transfer method to transfer token to multiple users wallet
+     * @param string $token
+     * @param double $amount
+     * @param string $memo
+     * @param Fee[] $fee
+     * @param Batch[] $batch
+     */
+    function batchTransfer($token, $amount, $memo, array $fee, array $batch)
+    {
+        $fee = LedgefarmCore::objToArray($fee);
+        $batch = LedgefarmCore::objToArray($batch);
+        $params = array(
+            "token" => $token,
+            "amount" => $amount,
+            "memo" => $memo,
+            "fee" => $fee,
+            "batchTransferRequest" => $batch
+        );
+        return LedgefarmCore::post($params,"/token/transfer/batch");
+    }
+    
+    /**
      * Withdraw method to withdraw token from a user wallet
      * @param string $fromWallet
      * @param string $token

@@ -68,7 +68,7 @@ Services that are available in this package:
 ### Wallet Service
 Wallet service is used to perform all operations related to the wallet like creating wallet, blocking and unblocking a wallet, obtain wallet data etc.
 #### Methods:
--   Create : This function is used to create a wallet. You need to pass a username of the wallet (Walletname) that needs to be created. In response, the packageit will return the wallet address and access Key for that wallet. This access Key will be used for further operations using this wallet.
+-   Create : This function is used to create a wallet. You need to pass a username of the wallet (Walletname) that needs to be created and some basic information about the user to available that wallet for other operator. In response, the package will return the wallet address and access Key for that wallet. This access Key will be used for further operations using this wallet.
 ```php
 
 require 'vendor/autoload.php';
@@ -94,7 +94,7 @@ class Client {
             try
             {
                 $wallet = new Wallet('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dc');
-                $resp = $wallet->create('q1w2e37ur4t5');
+                $resp = $wallet->create('q1w2e37ur4t5', 'test', 'test@test.com', '+91', '12345678', 'avatar', true);
                 print_r($resp);
             }
             catch(Exception $e)
@@ -137,14 +137,14 @@ public function getAll()
 }
 ```
 
--   Block: This function is used to block the user wallet. User wallet address need to pass for blocking a wallet. Admin access Key need to be used here for blocking user wallet.
+-   Update: This function is used to update a wallet. The Operator needs to pass a wallet address to update the wallet and information that need to be updated. Admin access key is required for unblocking the wallet.
 ```php
-public function block()
+public function update()
 {
         try
         {
             $wallet = new Wallet('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dc');
-            $resp = $wallet->block('q1w2e37ur4t5');
+            $resp = $wallet->update('q1w2e37ur4t5', 'testUser', 'test@test.com', '+91', '12345678', 'avatar', true, false);
             print_r($resp);
         }
         catch(Exception $e)
@@ -153,14 +153,14 @@ public function block()
         }
 }
 ```
--   Unblock: This function is used to unblock the user wallet. User wallet address need to pass for unblocking a wallet. Admin access Key need to be used here for unblocking user wallet.
+-   Search: This function is used to search a wallet. User can search wallet using wallet address, phone number and email. Admin access key is required for searching the wallet in directory service.
 ```php
-public function unblock()
+public function search()
 {
         try
         {
             $wallet = new Wallet('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dc');
-            $resp = $wallet->unblock('q1w2e37ur4t5');
+            $resp = $wallet->search('12345678', '+91');
             print_r($resp);
         }
         catch(Exception $e)
@@ -267,6 +267,26 @@ public function transfer()
         }
 }
 ```
+
+-   Batch transfer : This function is used to transfer tokens from one wallet to List of wallets. The Operator needs to pass wallet address to which the token needs to be transferred, token name, amount, and list of all applicable fees for transferring tokens to the wallet. Here, wallet’s access token (sender) is required to transfer the tokens from wallet.
+```php
+public function batchTransfer()
+{
+        try
+        {
+            $token = new Token('lf_core_test_445e4s5C453srtrtarg3s9sHsrtr34trqL4yjsWsD34sffarjtT1zdfp7dd');
+            $feeArray = array($this->feeObj);
+            $batchTransferArray = array($this->batchTransferObj);
+            $resp = $token->batchTransfer('USD', 10, 'Transfer', $feeArray, $batchTransferArray);
+            print_r($resp);
+        }
+        catch(Exception $e)
+        {
+            echo $e->getMessage(); 
+        }
+}
+```
+
 -   Withdraw: This function is used to withdraw tokens from the user. In this function wallet address of the user from token need to be withdrawn, token name, amount and list of all applicable fees need to be passed for the withdrawing tokens from the user. Admin access Key need to be used to withdrawing tokens from user's wallet.
 
 ```php
