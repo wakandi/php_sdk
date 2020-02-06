@@ -31,7 +31,7 @@ class Wallet
      * @param boolean $isPublic
      * OPTIONAL
      */
-    function create($walletName = "", $name = null, $email = null, $countryCode = null, $phone = null, $avatar = null, $isPublic = null)
+    function create($walletName = "", $name = null, $email = null, $countryCode = null, $phone = null, $avatar = null, $isPublic = false)
     {
         return LedgefarmCore::post(
             array(
@@ -60,7 +60,7 @@ class Wallet
      * @param boolean $blocked
      * OPTIONAL
      */
-    function update($wallet = "", $name = null, $email = null, $countryCode = null, $phone = null, $avatar = null, $isPublic = null, $blocked = null)
+    function update($wallet = "", $name = null, $email = null, $countryCode = null, $phone = null, $avatar = null, $isPublic = false, $blocked = false)
     {
         return LedgefarmCore::put(
             array(
